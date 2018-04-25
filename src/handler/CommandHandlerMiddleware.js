@@ -4,12 +4,29 @@ import MethodNameInflector from './MethodNameInflector/MethodNameInflector';
 import HandlerLocator from './Locator/HandlerLocator';
 import Middleware from '../Middleware';
 
+// Intend to define private property
+const _commandNameExtractor = Symbol('commandNameExtractor');
+const _handlerLocator = Symbol('handlerLocator');
+const _methodNameInflector = Symbol('methodNameInflector');
+
 export default class CommandHandlerMiddleware extends Middleware {
 	constructor(commandNameExtractor, handlerLocator, methodNameInflector) {
 		super();
-		this.commandNameExtractor = commandNameExtractor;
-		this.handlerLocator = handlerLocator;
-		this.methodNameInflector = methodNameInflector;
+		this[_commandNameExtractor] = commandNameExtractor;
+		this[_handlerLocator] = handlerLocator;
+		this[_methodNameInflector] = methodNameInflector;
+	}
+
+	set commandNameExtractor(commandNameExtractor) {
+		this[_commandNameExtractor] = commandNameExtractor;
+	}
+
+	set handlerLocator(handlerLocator) {
+		this[_handlerLocator] = handlerLocator;
+	}
+
+	set methodNameInflector(methodNameInflector) {
+		this[_methodNameInflector] = methodNameInflector;
 	}
 
 	execute(command, next) {
@@ -17,16 +34,16 @@ export default class CommandHandlerMiddleware extends Middleware {
 		let handler = null;
 		let methodName = null;
 
-		if (this.commandNameExtractor instanceof CommandNameExtractor) {
-			commandName = this.commandNameExtractor.extractName(command);
+		if (this[_commandNameExtractor] instanceof CommandNameExtractor) {
+			commandName = this[_commandNameExtractor].extractName(command);
 		}
 
-		if (commandName && this.handlerLocator instanceof HandlerLocator) {
-			handler = this.handlerLocator.getHandlerForCommand(commandName);
+		if (commandName && this[_handlerLocator] instanceof HandlerLocator) {
+			handler = this[_handlerLocator].getHandlerForCommand(commandName);
 		}
 
-		if (commandName && handler && this.methodNameInflector instanceof MethodNameInflector) {
-			methodName = this.methodNameInflector.inflect(commandName, handler);
+		if (commandName && handler && this[_methodNameInflector] instanceof MethodNameInflector) {
+			methodName = this[_methodNameInflector].inflect(commandName, handler);
 		}
 
 		if (isFunction(handler[methodName])) {

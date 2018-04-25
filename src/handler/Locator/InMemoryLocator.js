@@ -1,10 +1,16 @@
-import { has, isString } from 'lodash';
+import { reduce, has, isString, isFunction, isObject } from 'lodash';
 import HandlerLocator from './HandlerLocator';
 
 export default class InMemoryLocator extends HandlerLocator {
-	constructor(handlers) {
+	constructor(handlers = {}) {
 		super();
-		this.handlers = handlers;
+		this.handlers = {};
+		if (isObject(handlers)) {
+			this.handlers = reduce(handlers, (carry, Handler, key) => {
+				carry[key] = isFunction(Handler) ? new Handler() : Handler; // eslint-disable-line
+				return carry;
+			}, {});
+		}
 	}
 
 	getHandlerForCommand(commandName) {
