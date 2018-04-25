@@ -1,4 +1,4 @@
-#node-command-bus
+# node-command-bus
 JS implementation of the Tactician Command Bus (PHP) https://tactician.thephpleague.com/
 
 ## Run
