@@ -2,6 +2,7 @@
 const util = require('util');
 const CommandBus = require('../lib/commandBus').default;
 const Command = require('../lib/Command').default;
+const InvalidMiddlewareException = require('../lib/exceptions/InvalidMiddleware').default;
 
 class FooCommand extends Command {
 }
@@ -13,7 +14,12 @@ var commandBus = new CommandBus([ new InvalidMiddleware() ]);
 ////////////////////////////////
 const fooCommand = new FooCommand();
 
-var result = commandBus.handle(fooCommand);
+try {
+	var result = commandBus.handle(fooCommand);
+} catch (e) {
+	console.log(e.message());
+}
+
 
 
 
