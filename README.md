@@ -1,4 +1,4 @@
-# node-command-bus
+# Simple Command Bus
 Simple Command Bus Implementation for NodeJS. 
 It is majorly based on the Tactician Command Bus for PHP https://tactician.thephpleague.com/
 
