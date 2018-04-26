@@ -71,6 +71,6 @@ describe('Testing CommandBus', function() {
 			new invalidMiddleware() // Invalid middleware
 		]);
 
-		expect(() => { bus.handle(null, new FooCommand()) }).to.throw();
+		expect(() => bus.handle(new FooCommand())).to.throw();
 	})
 });
