@@ -1,5 +1,6 @@
 # node-command-bus
-JS implementation of the Tactician Command Bus (PHP) https://tactician.thephpleague.com/
+Simple Command Bus Implementation for NodeJS. 
+It is majorly based on the Tactician Command Bus for PHP https://tactician.thephpleague.com/
 
 ## Run
 - `yarn install`
