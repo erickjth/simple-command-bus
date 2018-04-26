@@ -1,5 +1,7 @@
 import { reduce, has, isString, isFunction, isObject } from 'lodash';
 import HandlerLocator from './HandlerLocator';
+import MissingHandlerException from '../../exceptions/MissingHandlerException';
+import InvalidCommandException from '../../exceptions/InvalidCommandException';
 
 export default class InMemoryLocator extends HandlerLocator {
 	constructor(handlers = {}) {
@@ -15,13 +17,13 @@ export default class InMemoryLocator extends HandlerLocator {
 
 	getHandlerForCommand(commandName) {
 		if (isString(commandName) === false) {
-			throw new Error('Invalid Command Name.');
+			throw new InvalidCommandException();
 		}
 
 		const handlerName = commandName.replace('Command', 'Handler');
 
 		if (has(this.handlers, handlerName) === false) {
-			throw new Error(`There is no a handler for "${commandName}" Command.`);
+			MissingHandlerException.forCommand(commandName);
 		}
 
 		return this.handlers[handlerName];

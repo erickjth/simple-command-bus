@@ -33,6 +33,7 @@ export default class CommandHandlerMiddleware extends Middleware {
 		let commandName = null;
 		let handler = null;
 		let methodName = null;
+		let result = null;
 
 		if (this[_commandNameExtractor] instanceof CommandNameExtractor) {
 			commandName = this[_commandNameExtractor].extractName(command);
@@ -46,10 +47,10 @@ export default class CommandHandlerMiddleware extends Middleware {
 			methodName = this[_methodNameInflector].inflect(commandName, handler);
 		}
 
-		if (isFunction(handler[methodName])) {
-			return handler[methodName].call(null, command);
+		if (handler && isFunction(handler[methodName])) {
+			result = handler[methodName].call(null, command);
 		}
 
-		return null;
+		return result || null;
 	}
 }
