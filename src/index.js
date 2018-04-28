@@ -1,6 +1,7 @@
 import Middleware from './Middleware';
 import Command from './Command';
 import CommandBus from './CommandBus';
+import CreateCommandBusProxy from './CreateCommandBusProxy';
 import InvalidMiddlewareException from './exceptions/InvalidMiddlewareException';
 import InvalidCommandException from './exceptions/InvalidCommandException';
 import InvalidHandlerMethodException from './exceptions/InvalidHandlerMethodException';
@@ -13,12 +14,14 @@ import HandlerLocator from './handler/Locator/HandlerLocator';
 import ClassNameExtractor from './handler/CommandNameExtractor/ClassNameExtractor';
 import HandleInflector from './handler/MethodNameInflector/HandleInflector';
 import InMemoryLocator from './handler/Locator/InMemoryLocator';
+import NamespaceHandlerLocator from './handler/Locator/NamespaceHandlerLocator';
 
 export default CommandBus;
 
 export {
 	Middleware,
 	Command,
+	CreateCommandBusProxy,
 	InvalidMiddlewareException,
 	InvalidCommandException,
 	InvalidHandlerMethodException,
@@ -30,5 +33,6 @@ export {
 	LoggerMiddleware,
 	ClassNameExtractor,
 	HandleInflector,
-	InMemoryLocator
+	InMemoryLocator,
+	NamespaceHandlerLocator
 };
