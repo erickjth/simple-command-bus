@@ -43,7 +43,7 @@ var commandBus = new CommandBus([
 ////////////////////////////////
 
 (async function() {
-	const createAccountCommand = new CreateAccountCommand('Erick', 'Torres');
+	const createAccountCommand = new CreateAccountCommand('John', 'Doe');
 
 	try {
 		var result = await commandBus.handle(createAccountCommand);
