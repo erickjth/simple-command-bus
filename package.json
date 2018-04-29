@@ -9,7 +9,7 @@
     "typecheck": "flow check",
     "test": "mocha --recursive --require babel-core/register",
     "test:coverage": "nyc --reporter=html --reporter=text mocha --recursive --require babel-core/register",
-    "report:coverage": "nyc report --reporter=text-lcov mocha --recursive --require babel-core/register > coverage.lcov && codecov"
+    "report:coverage": "nyc --reporter=text --reporter=text-lcov mocha --recursive --require babel-core/register > coverage.lcov && codecov"
   },
   "author": "",
   "license": "ISC",
