@@ -9,4 +9,4 @@ cache:
 
 script:
 - yarn test
-- yarn codecov
+- yarn report:coverage
