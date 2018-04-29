@@ -8,7 +8,8 @@
     "build:watch": "babel --watch src/ -d lib/",
     "typecheck": "flow check",
     "test": "mocha --recursive --require babel-core/register",
-    "test:coverage": "nyc --reporter=html --reporter=text mocha --recursive --require babel-core/register"
+    "test:coverage": "nyc --reporter=html --reporter=text mocha --recursive --require babel-core/register",
+    "codecov": "nyc report --reporter=text-lcov mocha --recursive --require babel-core/register > coverage.lcov && codecov"
   },
   "author": "",
   "license": "ISC",
@@ -20,6 +21,7 @@
     "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-0": "^6.24.1",
     "chai": "^4.1.2",
+    "codecov": "^3.0.1",
     "eslint-config-airbnb-standard": "^1.6.6",
     "flow-bin": "^0.70.0",
     "mocha": "^5.1.1",
