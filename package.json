@@ -28,6 +28,8 @@
     "nyc": "^11.7.1"
   },
   "dependencies": {
-    "lodash": "^4.17.5"
+    "lodash": "^4.17.5",
+    "mock-require": "^3.0.2",
+    "sinon": "^4.5.0"
   }
 }
