@@ -1,7 +1,7 @@
 {
-  "name": "command-bus",
+  "name": "simple-command-bus",
   "version": "1.0.0",
-  "description": "",
+  "description": "Simple Command Bus",
   "main": "lib/index.js",
   "scripts": {
     "build": "babel src/ -d lib/",
@@ -11,7 +11,7 @@
     "test:coverage": "nyc --reporter=html --reporter=text mocha --recursive --require babel-core/register",
     "report:coverage": "nyc --reporter=text --reporter=text-lcov mocha --recursive --require babel-core/register > coverage.lcov && codecov"
   },
-  "author": "",
+  "author": "Erick Torres <ericktorresh@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.26.0",
