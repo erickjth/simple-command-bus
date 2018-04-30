@@ -1,12 +1,13 @@
 import { capitalize, isDirectory, isFunction, walkSync } from './utils';
 
+const cachedCommands = {};
+
 const CreateCommandBusProxy = function CreateCommandBusProxy(commandBus, commandsDir) {
 	if (!commandsDir || !isDirectory(commandsDir)) {
 		throw new Error('Invalid commands path.');
 	}
 
 	const availableCommands = walkSync(commandsDir);
-	const cachedCommands = {};
 
 	return new Proxy({}, {
 		get(target, propKey) {
