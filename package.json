@@ -1,6 +1,6 @@
 {
   "name": "simple-command-bus",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Simple Command Bus",
   "main": "lib/index.js",
   "scripts": {
@@ -11,8 +11,22 @@
     "test:coverage": "nyc --reporter=html --reporter=text mocha --recursive --require babel-core/register",
     "report:coverage": "nyc --reporter=text --reporter=text-lcov mocha --recursive --require babel-core/register > coverage.lcov && codecov"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erickjth/simple-command-bus.git"
+  },
+  "keywords": [
+    "bus",
+    "command-bus",
+    "command",
+    "handlers"
+  ],
   "author": "Erick Torres <ericktorresh@gmail.com>",
-  "license": "ISC",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/erickjth/simple-command-bus/issues"
+  },
+  "homepage": "https://github.com/erickjth/simple-command-bus",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-eslint": "^8.2.2",
