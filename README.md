@@ -15,13 +15,10 @@ This project requires nodejs 8 or higher.
 ### Yarn
 `yarn add simple-command-bus`
 
-## Run test
-`yarn run test`
-`yarn run test:coverage`
-
-## Basic Usage
+## Basic Usage
 ```
 const {
+	Command,
 	CommandBus,
 	CommandHandlerMiddleware,
 	ClassNameExtractor,
@@ -46,13 +43,14 @@ class CreateAccountHandler {
 	}
 };
 
-// Handler midleware
+// Handler middleware
 var commandHandlerMiddleware = new CommandHandlerMiddleware(
 	new ClassNameExtractor(),
 	new InMemoryLocator({ CreateAccountHandler: new CreateAccountHandler() }),
 	new HandleInflector()
 );
-
+	
+// Command bus instance
 var commandBus = new CommandBus([
 	new LoggerMiddleware(console),
 	commandHandlerMiddleware
@@ -62,6 +60,10 @@ const createAccountCommand = new CreateAccountCommand('John', 'Doe');
 var result = commandBus.handle(createAccountCommand);
 console.log('Result:', result);
 ```
+
+## Run test
+`yarn run test`
+`yarn run test:coverage`
 
 ## Check example
 - `node examples/index.js`
