@@ -19,6 +19,7 @@ import NamespaceHandlerLocator from './handler/Locator/NamespaceHandlerLocator';
 export default CommandBus;
 
 export {
+	CommandBus,
 	Middleware,
 	Command,
 	CreateCommandBusProxy,
