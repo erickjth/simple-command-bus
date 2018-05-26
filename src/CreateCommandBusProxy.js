@@ -1,4 +1,4 @@
-import { capitalize, isDirectory, isFunction, walkSync } from './utils';
+import { camelCase, startCase, isDirectory, isFunction, walkSync } from './utils';
 
 const cachedCommands = {};
 
@@ -11,7 +11,9 @@ const CreateCommandBusProxy = function CreateCommandBusProxy(commandBus, command
 
 	return new Proxy({}, {
 		get(target, propKey) {
-			const commandName = `${capitalize(propKey)}Command.js`;
+			const commandName = `${startCase(camelCase(propKey))}Command.js`;
+
+			console.log(commandName);
 
 			if (!cachedCommands[commandName]) {
 				const foundCommand = availableCommands.find(command => command.endsWith(commandName));
@@ -20,7 +22,7 @@ const CreateCommandBusProxy = function CreateCommandBusProxy(commandBus, command
 					throw new Error(`Command "${commandName}" not found.`);
 				}
 
-				cachedCommands[commandName] = require(foundCommand);
+				cachedCommands[commandName] = require(foundCommand); // eslint-disable-line
 			}
 
 			const Command = cachedCommands[commandName];
