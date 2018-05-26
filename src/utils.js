@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import capitalizeStr from 'lodash/capitalize';
 import camelCaseStr from 'lodash/camelCase';
-import startCaseStr from 'lodash/startCase';
+import upperFirstStr from 'lodash/upperFirst';
 
 const isDirectory = dir => fs.lstatSync(dir).isDirectory();
 
@@ -13,7 +13,7 @@ const capitalize = s => capitalizeStr(s);
 
 const camelCase = s => camelCaseStr(s);
 
-const startCase = s => startCaseStr(s);
+const upperFirst = s => upperFirstStr(s);
 
 const isString = s => typeof s === 'string';
 
@@ -24,7 +24,7 @@ export {
 	walkSync,
 	capitalize,
 	camelCase,
-	startCase,
+	upperFirst,
 	isString,
 	isFunction
 };

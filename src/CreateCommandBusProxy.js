@@ -1,4 +1,4 @@
-import { camelCase, startCase, isDirectory, isFunction, walkSync } from './utils';
+import { camelCase, upperFirst, isDirectory, isFunction, walkSync } from './utils';
 
 const cachedCommands = {};
 
@@ -11,7 +11,7 @@ const CreateCommandBusProxy = function CreateCommandBusProxy(commandBus, command
 
 	return new Proxy({}, {
 		get(target, propKey) {
-			const commandName = `${startCase(camelCase(propKey))}Command.js`;
+			const commandName = `${upperFirst(camelCase(propKey))}Command.js`;
 
 			if (!cachedCommands[commandName]) {
 				const foundCommand = availableCommands.find(command => command.endsWith(commandName));
