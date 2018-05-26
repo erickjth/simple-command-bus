@@ -13,8 +13,6 @@ const CreateCommandBusProxy = function CreateCommandBusProxy(commandBus, command
 		get(target, propKey) {
 			const commandName = `${startCase(camelCase(propKey))}Command.js`;
 
-			console.log(commandName);
-
 			if (!cachedCommands[commandName]) {
 				const foundCommand = availableCommands.find(command => command.endsWith(commandName));
 
