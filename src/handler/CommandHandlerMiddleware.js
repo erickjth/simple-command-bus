@@ -48,7 +48,7 @@ export default class CommandHandlerMiddleware extends Middleware {
 		}
 
 		if (handler && isFunction(handler[methodName])) {
-			result = handler[methodName].call(null, command);
+			result = handler[methodName].call(handler, command);
 		}
 
 		return result || null;
