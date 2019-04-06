@@ -1,4 +1,4 @@
-const CommandBus = require('../../lib/commandBus').default;
+const CommandBus = require('../../lib/CommandBus').default;
 const CreateCommandBusProxy = require('../../lib/CreateCommandBusProxy').default;
 const CommandHandlerMiddleware = require('../../lib/handler/CommandHandlerMiddleware').default;
 const LoggerMiddleware = require('../../lib/plugins/LoggerMiddleware').default;

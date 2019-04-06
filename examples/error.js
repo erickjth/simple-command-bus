@@ -1,6 +1,6 @@
 
 const util = require('util');
-const CommandBus = require('../lib/commandBus').default;
+const CommandBus = require('../lib/CommandBus').default;
 const Command = require('../lib/Command').default;
 const InvalidMiddlewareException = require('../lib/exceptions/InvalidMiddleware').default;
 

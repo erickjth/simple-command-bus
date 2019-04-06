@@ -1,6 +1,6 @@
 
 const util = require('util');
-const CommandBus = require('../lib/commandBus').default;
+const CommandBus = require('../lib/CommandBus').default;
 const CommandHandlerMiddleware = require('../lib/handler/CommandHandlerMiddleware').default;
 const LoggerMiddleware = require('../lib/plugins/LoggerMiddleware').default;
 const ClassNameExtractor = require('../lib/handler/CommandNameExtractor/ClassNameExtractor').default;
