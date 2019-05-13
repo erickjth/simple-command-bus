@@ -62,8 +62,10 @@ var result = commandBus.handle(createAccountCommand);
 console.log('Result:', result);
 ```
 
-## Run test
+## Run tests
 `yarn run test`
+
+## Run tests with coverage
 `yarn run test:coverage`
 
 ## Check example
