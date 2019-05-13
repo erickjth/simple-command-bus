@@ -7,9 +7,9 @@
     "build": "babel src/ -d lib/",
     "build:watch": "babel --watch src/ -d lib/",
     "typecheck": "flow check",
-    "test": "mocha --recursive --require babel-core/register",
-    "test:coverage": "nyc --reporter=html --reporter=text mocha --recursive --require babel-core/register",
-    "report:coverage": "nyc --reporter=text --reporter=text-lcov mocha --recursive --require babel-core/register > coverage.lcov && codecov"
+    "test": "mocha --recursive --require @babel/register",
+    "test:coverage": "nyc --reporter=html --reporter=text mocha --recursive --require @babel/register",
+    "report:coverage": "nyc --reporter=text --reporter=text-lcov mocha --recursive --require @babel/register > coverage.lcov && codecov"
   },
   "repository": {
     "type": "git",
@@ -28,12 +28,11 @@
   },
   "homepage": "https://github.com/erickjth/simple-command-bus",
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-eslint": "^8.2.2",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-flow": "^6.23.0",
-    "babel-preset-stage-0": "^6.24.1",
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-flow": "^7.0.0",
     "chai": "^4.1.2",
     "codecov": "^3.0.1",
     "eslint-config-airbnb-standard": "^3.0.1",
