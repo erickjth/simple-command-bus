@@ -1,4 +1,5 @@
 # Simple Command Bus
+[![npm version](https://badge.fury.io/js/simple-command-bus.svg)](https://badge.fury.io/js/simple-command-bus)
 [![Build Status](https://travis-ci.org/erickjth/simple-command-bus.png?branch=master)](https://travis-ci.org/erickjth/simple-command-bus)
 [![codecov](https://codecov.io/gh/erickjth/simple-command-bus/branch/master/graph/badge.svg)](https://codecov.io/gh/erickjth/simple-command-bus)
 
@@ -49,7 +50,7 @@ var commandHandlerMiddleware = new CommandHandlerMiddleware(
 	new InMemoryLocator({ CreateAccountHandler: new CreateAccountHandler() }),
 	new HandleInflector()
 );
-	
+
 // Command bus instance
 var commandBus = new CommandBus([
 	new LoggerMiddleware(console),
