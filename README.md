@@ -1,4 +1,5 @@
 # Simple Command Bus
+[![npm version](https://badge.fury.io/js/simple-command-bus.svg)](https://badge.fury.io/js/simple-command-bus)
 [![Build Status](https://travis-ci.org/erickjth/simple-command-bus.png?branch=master)](https://travis-ci.org/erickjth/simple-command-bus)
 [![codecov](https://codecov.io/gh/erickjth/simple-command-bus/branch/master/graph/badge.svg)](https://codecov.io/gh/erickjth/simple-command-bus)
 
@@ -49,7 +50,7 @@ var commandHandlerMiddleware = new CommandHandlerMiddleware(
 	new InMemoryLocator({ CreateAccountHandler: new CreateAccountHandler() }),
 	new HandleInflector()
 );
-	
+
 // Command bus instance
 var commandBus = new CommandBus([
 	new LoggerMiddleware(console),
@@ -61,8 +62,10 @@ var result = commandBus.handle(createAccountCommand);
 console.log('Result:', result);
 ```
 
-## Run test
+## Run tests
 `yarn run test`
+
+## Run tests with coverage
 `yarn run test:coverage`
 
 ## Check example
