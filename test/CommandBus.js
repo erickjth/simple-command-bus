@@ -6,7 +6,7 @@ import CommandHandlerMiddleware from '../src/handler/CommandHandlerMiddleware';
 import LoggerMiddleware from '../src/plugins/LoggerMiddleware';
 import ClassNameExtractor from '../src/handler/CommandNameExtractor/ClassNameExtractor';
 import HandleInflector from '../src/handler/MethodNameInflector/HandleInflector';
-import ClassNameInflector from "../src/handler/MethodNameInflector/ClassNameInflector";
+import HandleClassNameInflector from "../src/handler/MethodNameInflector/HandleClassNameInflector";
 import InMemoryLocator from '../src/handler/Locator/InMemoryLocator';
 
 const consoleMock = {
@@ -23,7 +23,7 @@ const commandHandlerMiddleware = new CommandHandlerMiddleware(
 const classNameHandlerMiddleware = new CommandHandlerMiddleware(
 	new ClassNameExtractor(),
 	new InMemoryLocator({}),
-	new ClassNameInflector()
+	new HandleClassNameInflector()
 );
 
 describe('Testing CommandBus', function() {
