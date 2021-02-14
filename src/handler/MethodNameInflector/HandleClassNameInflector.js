@@ -1,6 +1,6 @@
 import MethodNameInflector from './MethodNameInflector';
 
-export default class ClassNameInflector extends MethodNameInflector {
+export default class HandleClassNameInflector extends MethodNameInflector {
     constructor(methodName) {
         super();
         this.methodName = methodName || "handle";
