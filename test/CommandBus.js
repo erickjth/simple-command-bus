@@ -74,9 +74,9 @@ describe('Testing CommandBus', function() {
 			}
 		}
 
-		class SumHandler { handleSum(command) { return command.a + command.b; } }
+		class SumHandler { handleSumCommand(command) { return command.a + command.b; } }
 		classNameHandlerMiddleware.handlerLocator = new InMemoryLocator({ SumHandler });
-		const bus = new CommandBus([commandHandlerMiddleware]);
+		const bus = new CommandBus([classNameHandlerMiddleware]);
 		const sumCommand = new SumCommand(4, 6);
 		const result = bus.handle(sumCommand);
 		expect(result).to.be.equal(10);
