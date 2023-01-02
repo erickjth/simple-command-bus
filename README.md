@@ -1,22 +1,28 @@
 # Simple Command Bus
+
 [![npm version](https://badge.fury.io/js/simple-command-bus.svg)](https://badge.fury.io/js/simple-command-bus)
 [![Build Status](https://travis-ci.org/erickjth/simple-command-bus.png?branch=master)](https://travis-ci.org/erickjth/simple-command-bus)
 [![codecov](https://codecov.io/gh/erickjth/simple-command-bus/branch/master/graph/badge.svg)](https://codecov.io/gh/erickjth/simple-command-bus)
-
 
 Simple Command Bus Implementation for NodeJS.
 It is majorly inspired by Tactician Command Bus for PHP https://tactician.thephpleague.com/
 
 ## Requirements
-This project requires nodejs 8 or higher.
+
+This project requires nodejs 14 or higher.
 
 ## Install
+
 ### NPM
+
 `npm install simple-command-bus`
+
 ### Yarn
+
 `yarn add simple-command-bus`
 
 ## Basic Usage
+
 ```
 const {
 	Command,
@@ -63,10 +69,13 @@ console.log('Result:', result);
 ```
 
 ## Run tests
+
 `yarn run test`
 
 ## Run tests with coverage
+
 `yarn run test:coverage`
 
 ## Check example
-- `node examples/index.js`
+
+-   `node examples/index.js`
