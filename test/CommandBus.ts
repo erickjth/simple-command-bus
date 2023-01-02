@@ -55,6 +55,22 @@ describe('Testing CommandBus', function () {
 		expect(result).to.be.equal(10);
 	});
 
+	it('Handling a command with Class name inflector', function () {
+		class SumCommand extends AbstractCommand<{ a: number; b: number }> {}
+
+		class SumHandler implements Handler<SumCommand> {
+			handle(command: SumCommand) {
+				return command.payload.a + command.payload.b;
+			}
+		}
+		// class SumHandler { handleSum(command) { return command.a + command.b; } }
+		// classNameHandlerMiddleware.handlerLocator = new InMemoryLocator({ SumHandler });
+		// const bus = new CommandBus([commandHandlerMiddleware]);
+		// const sumCommand = new SumCommand(4, 6);
+		// const result = bus.handle(sumCommand);
+		// expect(result).to.be.equal(10);
+	});
+
 	it('Handling an invalid command', function () {
 		class InvalidCommand {}
 		const bus = new CommandBus();

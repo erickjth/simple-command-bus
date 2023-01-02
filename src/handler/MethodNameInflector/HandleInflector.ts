@@ -3,7 +3,7 @@ import { MethodNameInflector, Command, CallableHandler } from '../../types';
 import { isCallable } from '../../utils';
 
 export class HandleInflector implements MethodNameInflector {
-	private methodName: string;
+	protected methodName: string;
 
 	constructor(methodName: string = 'handle') {
 		this.methodName = methodName;
