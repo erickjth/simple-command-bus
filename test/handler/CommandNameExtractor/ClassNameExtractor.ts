@@ -10,10 +10,4 @@ describe('Testing ClassNameExtractor', () => {
 		const commandName = nameExtractor.extractName(new FooCommand());
 		expect(commandName).to.be.equal('FooCommand');
 	});
-
-	// it('Invalid Command Object', () => {
-	// 	const nameExtractor = new ClassNameExtractor();
-	// 	const fakeCommand = function fakeCommand() {};
-	// 	expect(() => nameExtractor.extractName(fakeCommand)).to.throw();
-	// });
 });

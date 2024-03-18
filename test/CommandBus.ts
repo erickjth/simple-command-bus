@@ -2,7 +2,8 @@
 import { expect } from 'chai';
 import { CommandBus } from '../src/CommandBus';
 import { AbstractCommand } from '../src/AbstractCommand';
-import { Command, Handler } from '../src/types';
+import { AbstractHandler } from '../src/AbstractHandler';
+import { Command, CommandReturn, Handler } from '../src/types';
 import { CommandHandlerMiddleware } from '../src/handler/CommandHandlerMiddleware';
 import { LoggerMiddleware } from '../src/plugins/LoggerMiddleware';
 import { HandleInflector } from '../src/handler/MethodNameInflector/HandleInflector';
@@ -37,9 +38,11 @@ describe('Testing CommandBus', function () {
 	});
 
 	it('Handling a command with handler', function () {
-		class SumCommand extends AbstractCommand<{ a: number; b: number }> {}
+		class SumCommand extends AbstractCommand<{ a: number; b: number }, number> {}
 
-		class SumHandler implements Handler<SumCommand> {
+		type Command = CommandReturn<SumCommand>;
+
+		class SumHandler extends AbstractHandler<SumCommand> {
 			handle(command: SumCommand) {
 				return command.payload.a + command.payload.b;
 			}

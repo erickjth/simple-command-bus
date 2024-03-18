@@ -13,4 +13,18 @@ describe('Testing HandleInflector', () => {
 		const handleMethod = inflector.inflect(new FooCommand(), new FooHandler());
 		expect(handleMethod).to.be.equal('handle');
 	});
+
+	it('Testing handle class name', () => {
+		const inflector = new HandleInflector();
+		class FooCommand implements Command {}
+		class FooHandler implements Handler<FooCommand> {
+			handle(command: Command) {}
+		}
+
+		// class FooCommand implements Command {}
+		// const handleMethod = MakeHandler(new FooCommand);
+		// class FooHandler implements {
+		// 	handle(command: Command) {}
+		// }
+	});
 });

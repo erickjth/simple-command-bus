@@ -1,4 +1,10 @@
-import { Middleware, NextFunction, CommandBus as ICommandBus, Command } from './types';
+import {
+	Middleware,
+	NextFunction,
+	CommandBus as ICommandBus,
+	Command,
+	CommandReturn,
+} from './types';
 
 /**
  * Bus that run and handle commands through middlewares
@@ -25,7 +31,7 @@ export class CommandBus implements ICommandBus {
 	 * Handles a command through the middleware stack
 	 * @param command
 	 */
-	handle<C extends Command>(command: C): any {
+	handle<C extends Command>(command: C): CommandReturn<C> {
 		const runCommandInMiddlewareStack = this.stack.reduceRight(
 			(next: NextFunction<C>, middleware: Middleware) => {
 				return middleware.execute.bind(middleware, command, next);

@@ -1,5 +1,8 @@
 import { Command } from './types';
 
-export abstract class AbstractCommand<T> implements Command<T> {
+export const commandReturnSymbol = Symbol('command-return');
+
+export abstract class AbstractCommand<T = unknown, R = unknown> implements Command<T, R> {
+	[commandReturnSymbol]: R;
 	constructor(public payload: T) {}
 }

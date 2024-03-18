@@ -5,6 +5,7 @@ export * from './exceptions';
 export * from './plugins';
 export * from './handler';
 export * from './AbstractCommand';
+export * from './AbstractHandler';
 
 export default CommandBus;
 

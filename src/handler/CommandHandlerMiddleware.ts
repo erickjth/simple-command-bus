@@ -1,4 +1,4 @@
-import { Middleware, MethodNameInflector, HandlerLocator, Command } from '../types';
+import { Middleware, MethodNameInflector, HandlerLocator, Command, CommandReturn } from '../types';
 import { isCallable } from '../utils';
 
 export class CommandHandlerMiddleware implements Middleware {

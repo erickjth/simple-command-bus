@@ -6,7 +6,7 @@ import { CommandToHandlerMapLocator } from '../../src/handler/Locator/CommandToH
 import { Handler } from '../../src/types';
 import { AbstractCommand } from '../../src/AbstractCommand';
 
-class SumCommand extends AbstractCommand<{ a: number; b: number }> {}
+class SumCommand extends AbstractCommand<{ a: number; b: number }, number> {}
 
 class SumHandler implements Handler<SumCommand> {
 	handle(command: SumCommand) {

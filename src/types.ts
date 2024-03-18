@@ -1,3 +1,5 @@
+import { commandReturnSymbol } from './AbstractCommand';
+
 export type Probably<T> = T | undefined;
 export type Nullable<T> = T | null;
 
@@ -8,18 +10,25 @@ export interface CommandBus {
 	handle(command: Command): any;
 }
 
-export interface Command<P = unknown> {
-	payload?: P;
+export interface Command<Payload = unknown, Return = unknown> {
+	[commandReturnSymbol]?: Return;
+	payload?: Payload;
 }
 
+export type CommandPayload<C> = C extends Command<infer Payload, any> ? Payload : never;
+
+export type CommandReturn<C> = C extends Command<any, infer Return> ? Return : never;
+
+export type CommandType<TCommand> = Command<CommandReturn<TCommand>, CommandPayload<TCommand>>;
+
 export interface Handler<C extends Command> {
-	handle(command: C): any;
+	handle(command: C): CommandReturn<C>;
 }
 
 export type CallableHandler<C extends Command> = Handler<C> | HandlerFunction<C>;
 
 export interface Middleware {
-	execute: <C extends Command, R = any>(command: C, next: NextFunction<C>) => R;
+	execute: <C extends Command>(command: C, next: NextFunction<C>) => unknown;
 }
 
 export interface MethodNameInflector {
