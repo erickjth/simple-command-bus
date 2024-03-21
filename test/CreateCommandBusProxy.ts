@@ -4,11 +4,12 @@ const sinon = require('sinon');
 const mock = require('mock-require');
 import * as utils from '../src/utils';
 import CreateCommandBusProxy from '../src/CreateCommandBusProxy';
-import { Command, Handler } from '../src/types';
 import { CommandToHandlerMapLocator } from '../src/handler/Locator/CommandToHandlerMapLocator';
 import { CommandBus } from '../src/CommandBus';
 import { HandleInflector } from '../src/handler/MethodNameInflector/HandleInflector';
 import { CommandHandlerMiddleware } from '../src/handler/CommandHandlerMiddleware';
+import { AbstractHandler } from '../src/AbstractHandler';
+import { Command } from '../src/types';
 
 describe('Testing CommandBus with proxy', function () {
 	it('Handling a command with handler', function () {
@@ -21,7 +22,7 @@ describe('Testing CommandBus with proxy', function () {
 		});
 
 		class FooCommand implements Command {}
-		class FooHandler implements Handler<FooCommand> {
+		class FooHandler extends AbstractHandler<FooCommand> {
 			handle() {
 				return 1;
 			}

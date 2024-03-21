@@ -3,12 +3,12 @@ import { expect } from 'chai';
 import { CommandHandlerMiddleware } from '../../src/handler/CommandHandlerMiddleware';
 import { HandleInflector } from '../../src/handler/MethodNameInflector/HandleInflector';
 import { CommandToHandlerMapLocator } from '../../src/handler/Locator/CommandToHandlerMapLocator';
-import { Handler } from '../../src/types';
 import { AbstractCommand } from '../../src/AbstractCommand';
+import { AbstractHandler } from '../../src/AbstractHandler';
 
 class SumCommand extends AbstractCommand<{ a: number; b: number }, number> {}
 
-class SumHandler implements Handler<SumCommand> {
+class SumHandler implements AbstractHandler<SumCommand> {
 	handle(command: SumCommand) {
 		return command.payload.a + command.payload.b;
 	}

@@ -15,13 +15,18 @@ export interface Command<Payload = unknown, Return = unknown> {
 	payload?: Payload;
 }
 
+export interface CommandWithPayload<Payload = unknown, Return = unknown>
+	extends Command<Payload, Return> {
+	payload: Payload;
+}
+
 export type CommandPayload<C> = C extends Command<infer Payload, any> ? Payload : never;
 
 export type CommandReturn<C> = C extends Command<any, infer Return> ? Return : never;
 
 export type CommandType<TCommand> = Command<CommandReturn<TCommand>, CommandPayload<TCommand>>;
 
-export interface Handler<C extends Command> {
+export interface Handler<C> {
 	handle(command: C): CommandReturn<C>;
 }
 

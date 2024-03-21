@@ -1,6 +1,7 @@
 /* global it, beforeEach, describe */
 import { expect } from 'chai';
 import { LoggerMiddleware } from '../../src/plugins/LoggerMiddleware';
+import { AbstractCommand } from '../../src/AbstractCommand';
 import { Command } from '../../src/types';
 
 describe('Testing CommandHandlerMiddleware', function () {

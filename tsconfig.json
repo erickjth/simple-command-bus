@@ -1,14 +1,21 @@
 {
 	"compilerOptions": {
-		"lib": ["es2018"],
-		"target": "es2018",
-		"module": "commonjs",
-		"moduleResolution": "node",
+		"lib": ["ES2023"],
+		"module": "ES2022",
+		"target": "ES2022",
+		"moduleResolution": "Bundler",
 		"strictNullChecks": true,
 		"outDir": "./lib",
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		"sourceMap": true
+		"sourceMap": true,
+		"declaration": true,
+		"declarationDir": "./lib",
+		"baseUrl": "./src",
+		"strict": false,
+		"paths": {
+			"@/*": ["*"]
+		}
 	},
-	"include": ["src/**/*"]
+	"include": ["src"]
 }

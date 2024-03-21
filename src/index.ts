@@ -6,6 +6,7 @@ export * from './plugins';
 export * from './handler';
 export * from './AbstractCommand';
 export * from './AbstractHandler';
+export * from './types';
 
 export default CommandBus;
 

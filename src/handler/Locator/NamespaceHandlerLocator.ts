@@ -1,6 +1,16 @@
-import { isCallable, isDirectory, walkSync } from '../../utils';
+import {
+	camelCase,
+	isCallable,
+	isDirectory,
+	isFunction,
+	lowerCamelCase,
+	walkSync,
+} from '../../utils';
 import { HandlerLocator, CallableHandler, Command } from '../../types';
 import { MissingHandlerException } from '../../exceptions';
+import { createRequire } from 'module';
+
+const require = createRequire(import.meta.url);
 
 export class NamespaceHandlerLocator implements HandlerLocator {
 	private handlers: string[];
@@ -17,15 +27,28 @@ export class NamespaceHandlerLocator implements HandlerLocator {
 		const commandName = command.constructor?.name ?? undefined;
 		const handlerName = commandName.replace('Command', 'Handler');
 
-		const foundHandler = this.handlers.find(handler => handler.endsWith(handlerName));
+		const foundHandler = this.handlers.find(handler => {
+			const handlerFileName = handler.split('/').pop();
+			const name = handlerFileName?.replace('.ts', '').replace('.js', '');
+			return handlerName === name;
+		});
 
 		if (foundHandler === undefined) {
 			throw MissingHandlerException.forCommand(commandName);
 		}
 
-		const Handler = require(foundHandler);
+		const module = require(foundHandler);
 
-		if (isCallable(Handler) === false) {
+		console.log({ module });
+
+		const Handler =
+			module?.[handlerName] ??
+			module?.[lowerCamelCase(handlerName)] ??
+			module?.[camelCase(handlerName)] ??
+			module?.default ??
+			undefined;
+
+		if (isFunction(Handler) === false) {
 			throw MissingHandlerException.forCommand(commandName);
 		}
 

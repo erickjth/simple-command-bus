@@ -1,5 +1,7 @@
 import { CommandBus } from './types';
-import { camelCase, isDirectory, walkSync, isFunction } from './utils';
+import { lowerCamelCase, camelCase, isDirectory, walkSync, isFunction } from './utils';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 
 const cachedCommands: {
 	[key: string]: any;
@@ -13,45 +15,59 @@ const CreateCommandBusProxy = function CreateCommandBusProxy(
 		throw new Error('Invalid commands path.');
 	}
 
-	const availableCommands = walkSync(commandsDir).reduce((carry, command) => {
-		const fileName = command.split('/').pop();
+	const commands = walkSync(commandsDir) as string[];
+
+	const availableCommands = commands.reduce((carry, command) => {
+		const fileName = command.split('/').pop() as string;
 		const commandName = fileName.split('.').slice(0, -1).join('.');
 
 		if (commandName) {
-			const key = camelCase(commandName).replace(/command|Command$/, '');
-
-			return {
-				...carry,
-				[key]: command,
-			};
+			const key = lowerCamelCase(commandName).replace(/command|Command$/, '');
+			carry.set(key, { path: command, command: commandName });
 		}
 
 		return carry;
-	}, {} as { [key: string]: string });
+	}, new Map<string, { path: string; command: string }>());
 
 	return new Proxy<{ [key: string]: (...arg: any[]) => any }>(
 		{},
 		{
 			get(target, propKey: string) {
-				const commandName = camelCase(propKey);
+				const commandName = lowerCamelCase(propKey);
 
 				if (!cachedCommands[commandName]) {
-					const foundCommand = availableCommands?.[commandName];
+					const record = availableCommands.get(commandName);
 
-					if (!foundCommand) {
+					if (!record) {
 						throw new Error(`Command "${commandName}" not found.`);
 					}
 
-					cachedCommands[commandName] = require(foundCommand);
+					const { path, command } = record;
+
+					const module = require(path);
+
+					const callable =
+						module?.[command] ??
+						module?.[camelCase(command)] ??
+						module?.default ??
+						undefined;
+
+					if (!isFunction(callable)) {
+						throw new Error(
+							`Command "${commandName}" is not callable or not found with that name. Please make sure the command is exported with correct name.`
+						);
+					}
+
+					cachedCommands[commandName] = callable;
 				}
 
-				const CommandToHandle = cachedCommands[commandName];
+				const Command = cachedCommands[commandName];
 
-				if (isFunction(CommandToHandle) === false) {
+				if (isFunction(Command) === false) {
 					throw new Error(`Command "${commandName}" is not callable.`);
 				}
 
-				return (...args) => commandBus.handle(new CommandToHandle(...args));
+				return (...args) => commandBus.handle(new Command(...args));
 			},
 		}
 	);
