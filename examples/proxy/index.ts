@@ -22,6 +22,9 @@ var simpleCommandBus = new CommandBus([commandHandlerMiddleware]);
 
 const commandBusProxy = CreateCommandBusProxy(simpleCommandBus, commandsPath);
 
-const result = commandBusProxy.foo('John', 'Doe');
+const result = commandBusProxy.foo({
+	bar: 'bar',
+	baz: 'baz',
+});
 
 console.log(result);
