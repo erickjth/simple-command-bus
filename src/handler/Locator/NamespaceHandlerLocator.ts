@@ -39,8 +39,6 @@ export class NamespaceHandlerLocator implements HandlerLocator {
 
 		const module = require(foundHandler);
 
-		console.log({ module });
-
 		const Handler =
 			module?.[handlerName] ??
 			module?.[lowerCamelCase(handlerName)] ??
