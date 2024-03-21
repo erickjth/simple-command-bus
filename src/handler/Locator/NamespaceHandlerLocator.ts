@@ -6,7 +6,7 @@ import {
 	lowerCamelCase,
 	walkSync,
 } from '../../utils';
-import { HandlerLocator, CallableHandler, Command } from '../../types';
+import { HandlerLocator, CallableHandler, Command, Handler } from '../../types';
 import { MissingHandlerException } from '../../exceptions';
 import { createRequire } from 'module';
 
@@ -21,6 +21,10 @@ export class NamespaceHandlerLocator implements HandlerLocator {
 		}
 
 		this.handlers = walkSync(handlersPath);
+	}
+
+	createInstanceForHandler<C extends Command>(Module: any): CallableHandler<C> {
+		return new Module();
 	}
 
 	getHandlerForCommand<C extends Command>(command: C): CallableHandler<C> {
@@ -39,17 +43,16 @@ export class NamespaceHandlerLocator implements HandlerLocator {
 
 		const module = require(foundHandler);
 
-		const Handler =
-			module?.[handlerName] ??
+		const Handler = (module?.[handlerName] ??
 			module?.[lowerCamelCase(handlerName)] ??
 			module?.[camelCase(handlerName)] ??
 			module?.default ??
-			undefined;
+			undefined) as CallableHandler<C> | undefined;
 
 		if (isFunction(Handler) === false) {
 			throw MissingHandlerException.forCommand(commandName);
 		}
 
-		return new Handler();
+		return this.createInstanceForHandler(Handler);
 	}
 }
