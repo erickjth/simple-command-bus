@@ -1,5 +1,5 @@
 import { InvalidHandlerMethodException } from '../../exceptions';
-import { MethodNameInflector, Command, CallableHandler } from '../../types';
+import { MethodNameInflector, Command, Handler } from '../../types';
 import { isCallable } from '../../utils';
 
 export class HandleInflector implements MethodNameInflector {
@@ -9,7 +9,7 @@ export class HandleInflector implements MethodNameInflector {
 		this.methodName = methodName;
 	}
 
-	inflect<C extends Command>(command: Command, handler: CallableHandler<C>) {
+	inflect<C extends Command>(command: C, handler: Handler<C>) {
 		if (!isCallable(handler[this.methodName])) {
 			throw InvalidHandlerMethodException.forMethod(this.methodName);
 		}

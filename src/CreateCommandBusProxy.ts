@@ -1,7 +1,6 @@
 import { CommandBus } from './types';
-import { lowerCamelCase, camelCase, isDirectory, walkSync, isFunction } from './utils';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
+import utils from './utils';
+import nodeModule from 'module';
 
 const cachedCommands: {
 	[key: string]: any;
@@ -11,18 +10,18 @@ const CreateCommandBusProxy = function CreateCommandBusProxy(
 	commandBus: CommandBus,
 	commandsDir: string
 ) {
-	if (!commandsDir || !isDirectory(commandsDir)) {
+	if (!commandsDir || !utils.isDirectory(commandsDir)) {
 		throw new Error('Invalid commands path.');
 	}
 
-	const commands = walkSync(commandsDir) as string[];
+	const commands = utils.walkSync(commandsDir) as string[];
 
 	const availableCommands = commands.reduce((carry, command) => {
 		const fileName = command.split('/').pop() as string;
 		const commandName = fileName.split('.').slice(0, -1).join('.');
 
 		if (commandName) {
-			const key = lowerCamelCase(commandName).replace(/command|Command$/, '');
+			const key = utils.lowerCamelCase(commandName).replace(/command|Command$/, '');
 			carry.set(key, { path: command, command: commandName });
 		}
 
@@ -33,7 +32,7 @@ const CreateCommandBusProxy = function CreateCommandBusProxy(
 		{},
 		{
 			get(target, propKey: string) {
-				const commandName = lowerCamelCase(propKey);
+				const commandName = utils.lowerCamelCase(propKey);
 
 				if (!cachedCommands[commandName]) {
 					const record = availableCommands.get(commandName);
@@ -44,15 +43,15 @@ const CreateCommandBusProxy = function CreateCommandBusProxy(
 
 					const { path, command } = record;
 
-					const module = require(path);
+					const module = nodeModule.createRequire(import.meta.url)(path);
 
 					const callable =
 						module?.[command] ??
-						module?.[camelCase(command)] ??
+						module?.[utils.camelCase(command)] ??
 						module?.default ??
 						undefined;
 
-					if (!isFunction(callable)) {
+					if (!utils.isFunction(callable)) {
 						throw new Error(
 							`Command "${commandName}" is not callable or not found with that name. Please make sure the command is exported with correct name.`
 						);
@@ -63,7 +62,7 @@ const CreateCommandBusProxy = function CreateCommandBusProxy(
 
 				const Command = cachedCommands[commandName];
 
-				if (isFunction(Command) === false) {
+				if (utils.isFunction(Command) === false) {
 					throw new Error(`Command "${commandName}" is not callable.`);
 				}
 

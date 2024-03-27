@@ -42,3 +42,14 @@ export const camelCase = (s: string) => {
 };
 
 export { isCallable };
+
+export default {
+	isDirectory,
+	walkSync,
+	upperFirst,
+	isString,
+	isFunction,
+	lowerCamelCase,
+	camelCase,
+	isCallable,
+};

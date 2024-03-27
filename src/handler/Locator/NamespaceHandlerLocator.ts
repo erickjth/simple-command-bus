@@ -1,33 +1,24 @@
-import {
-	camelCase,
-	isCallable,
-	isDirectory,
-	isFunction,
-	lowerCamelCase,
-	walkSync,
-} from '../../utils';
-import { HandlerLocator, CallableHandler, Command, Handler } from '../../types';
+import utils from '../../utils';
+import { HandlerLocator, Handler, Command } from '../../types';
 import { MissingHandlerException } from '../../exceptions';
 import { createRequire } from 'module';
-
-const require = createRequire(import.meta.url);
 
 export class NamespaceHandlerLocator implements HandlerLocator {
 	private handlers: string[];
 
 	constructor(handlersPath: string) {
-		if (!handlersPath || !isDirectory(handlersPath)) {
+		if (!handlersPath || !utils.isDirectory(handlersPath)) {
 			throw new Error('Invalid commands path.');
 		}
 
-		this.handlers = walkSync(handlersPath);
+		this.handlers = utils.walkSync(handlersPath);
 	}
 
-	createInstanceForHandler<C extends Command>(Module: any): CallableHandler<C> {
+	createInstanceForHandler<C extends Command>(Module: any): Handler<C> {
 		return new Module();
 	}
 
-	getHandlerForCommand<C extends Command>(command: C): CallableHandler<C> {
+	getHandlerForCommand<C extends Command>(command: C): Handler<C> {
 		const commandName = command.constructor?.name ?? undefined;
 		const handlerName = commandName.replace('Command', 'Handler');
 
@@ -41,15 +32,15 @@ export class NamespaceHandlerLocator implements HandlerLocator {
 			throw MissingHandlerException.forCommand(commandName);
 		}
 
-		const module = require(foundHandler);
+		const module = createRequire(import.meta.url)(foundHandler);
 
 		const Handler = (module?.[handlerName] ??
-			module?.[lowerCamelCase(handlerName)] ??
-			module?.[camelCase(handlerName)] ??
+			module?.[utils.lowerCamelCase(handlerName)] ??
+			module?.[utils.camelCase(handlerName)] ??
 			module?.default ??
-			undefined) as CallableHandler<C> | undefined;
+			undefined) as Handler<C> | undefined;
 
-		if (isFunction(Handler) === false) {
+		if (utils.isFunction(Handler) === false) {
 			throw MissingHandlerException.forCommand(commandName);
 		}
 

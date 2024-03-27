@@ -11,11 +11,7 @@
 		"sourceMap": true,
 		"declaration": true,
 		"declarationDir": "./lib",
-		"baseUrl": "./src",
-		"strict": false,
-		"paths": {
-			"@/*": ["*"]
-		}
+		"strict": false
 	},
 	"include": ["src"]
 }

@@ -11,7 +11,7 @@ describe('Testing CommandHandlerMiddleware', function () {
 	});
 
 	it('Testing execute', function () {
-		class FooCommand implements Command {}
+		class FooCommand extends AbstractCommand {}
 		const logger = { log: () => {} };
 		const loggerMiddleware = new LoggerMiddleware(logger);
 		const next = () => 'result';

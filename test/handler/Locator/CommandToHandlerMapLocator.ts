@@ -1,24 +1,14 @@
 /* global it, describe */
 import { expect } from 'chai';
 import { CommandToHandlerMapLocator } from '../../../src/handler/Locator/CommandToHandlerMapLocator';
-import { Command, Handler } from '../../../src/types';
-import { isCallable } from '../../../src/utils';
+import { AbstractCommand } from '../../../src/AbstractCommand';
+import { AbstractHandler } from '../../../src/AbstractHandler';
 
 describe('Testing CommandToHandlerMapLocator', () => {
-	it('Check handler function for command', () => {
-		class FooCommand implements Command {}
-		const FooHandler = () => {};
+	it('Check handler class for command with class', () => {
+		class FooCommand extends AbstractCommand {}
 
-		const locator = new CommandToHandlerMapLocator([[FooCommand, FooHandler]]);
-		const handler = locator.getHandlerForCommand(new FooCommand());
-
-		expect(isCallable(handler)).to.be.true;
-	});
-
-	it('Check handler function for command with class', () => {
-		class FooCommand implements Command {}
-
-		class FooHandler implements Handler<FooCommand> {
+		class FooHandler extends AbstractHandler<FooCommand> {
 			handle(command: FooCommand) {}
 		}
 
@@ -29,7 +19,7 @@ describe('Testing CommandToHandlerMapLocator', () => {
 	});
 
 	it('Missing locator for command', () => {
-		class FooCommand implements Command {}
+		class FooCommand extends AbstractCommand {}
 
 		const locator = new CommandToHandlerMapLocator();
 		expect(() => locator.getHandlerForCommand(new FooCommand())).to.throw();

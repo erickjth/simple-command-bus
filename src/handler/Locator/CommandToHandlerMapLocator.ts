@@ -1,5 +1,5 @@
 import { MissingHandlerException } from '../../exceptions';
-import { HandlerLocator, CallableHandler, Command } from '../../types';
+import { HandlerLocator, Handler, Command } from '../../types';
 import { HandlerParams, Handlers, Instantiable } from './types';
 
 export class CommandToHandlerMapLocator implements HandlerLocator {
@@ -11,7 +11,7 @@ export class CommandToHandlerMapLocator implements HandlerLocator {
 		});
 	}
 
-	setHandlerForCommand<C extends Command>(command: Instantiable<C>, handler: CallableHandler<C>) {
+	setHandlerForCommand<C extends Command>(command: Instantiable<C>, handler: Handler<C>) {
 		this.handlers.set(command, handler);
 	}
 
@@ -21,13 +21,13 @@ export class CommandToHandlerMapLocator implements HandlerLocator {
 		});
 	}
 
-	getHandlerForCommand<C extends Command>(command: C): CallableHandler<C> {
+	getHandlerForCommand<C extends Command>(command: C): Handler<C> {
 		const handler = this.handlers.get(command.constructor as Instantiable<C>) ?? null;
 
 		if (!handler) {
 			throw MissingHandlerException.forCommand(command.constructor?.name);
 		}
 
-		return handler as CallableHandler<C>;
+		return handler as Handler<C>;
 	}
 }

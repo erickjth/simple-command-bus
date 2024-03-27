@@ -8,46 +8,27 @@ import { AbstractCommand } from '../../../src/AbstractCommand';
 describe('Testing HandleInflector', () => {
 	it('Testing valid handle method', () => {
 		const inflector = new HandleInflector();
-		class FooCommand implements Command {}
+		class FooCommand extends AbstractCommand {}
 		class FooHandler extends AbstractHandler<FooCommand> {
-			handle(command: Command) {}
+			handle(command: FooCommand) {}
 		}
 		const handleMethod = inflector.inflect(new FooCommand(), new FooHandler());
 		expect(handleMethod).to.be.equal('handle');
 	});
 
 	it('Testing handle class name', () => {
-		const inflector = new HandleInflector();
+		const inflector = new HandleInflector('execute');
+
 		class FooCommand extends AbstractCommand<number, number> {}
 
-		const foo = new FooCommand(2);
-
 		class FooHandler extends AbstractHandler<FooCommand> {
-			handle(command: FooCommand) {
+			execute(command: FooCommand) {
 				return command.payload;
 			}
 		}
 
-		const handler = new FooHandler();
+		const handleMethod = inflector.inflect(new FooCommand(5), new FooHandler());
 
-		handler.handle;
-
-		// class FooCommand implements Command {}
-		// const handleMethod = MakeHandler(new FooCommand);
-		// class FooHandler implements {
-		// 	handle(command: Command) {}
-		// }
+		expect(handleMethod).to.be.equal('execute');
 	});
 });
-
-class FooCommand implements Command {}
-
-class Testing<T extends Command> {
-	handle(command: T) {
-		return command;
-	}
-}
-
-const t = new Testing<FooCommand>();
-
-t.handle;

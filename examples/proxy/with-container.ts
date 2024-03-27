@@ -1,5 +1,5 @@
 import {
-	CallableHandler,
+	Handler,
 	Command,
 	CommandBus,
 	CommandHandlerMiddleware,
@@ -35,7 +35,7 @@ class NamespaceHandlerLocatorWithContainer extends NamespaceHandlerLocator {
 		this.container = container;
 	}
 
-	createInstanceForHandler<C extends Command>(Module: any): CallableHandler<C> {
+	createInstanceForHandler<C extends Command>(Module: any): Handler<C> {
 		return new Module(this.container);
 	}
 }

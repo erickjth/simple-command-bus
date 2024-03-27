@@ -3,7 +3,6 @@ import { expect } from 'chai';
 import { CommandBus } from '../src/CommandBus';
 import { AbstractCommand } from '../src/AbstractCommand';
 import { AbstractHandler } from '../src/AbstractHandler';
-import { Command } from '../src/types';
 import { CommandHandlerMiddleware } from '../src/handler/CommandHandlerMiddleware';
 import { LoggerMiddleware } from '../src/plugins/LoggerMiddleware';
 import { HandleInflector } from '../src/handler/MethodNameInflector/HandleInflector';
@@ -12,11 +11,6 @@ import { CommandToHandlerMapLocator } from '../src/handler/Locator/CommandToHand
 const consoleMock = {
 	log: () => null,
 };
-
-const commandHandlerMiddleware = new CommandHandlerMiddleware(
-	new CommandToHandlerMapLocator(),
-	new HandleInflector()
-);
 
 describe('Testing CommandBus', function () {
 	it('Testing constructor without middlewares', function () {
@@ -32,7 +26,7 @@ describe('Testing CommandBus', function () {
 
 	it('Handling a command without handler', function () {
 		const bus = new CommandBus([]);
-		class FooCommand implements Command {}
+		class FooCommand extends AbstractCommand<void> {}
 		const result = bus.handle(new FooCommand());
 		expect(result).to.be.equal(null);
 	});
@@ -41,13 +35,14 @@ describe('Testing CommandBus', function () {
 		class SumCommand extends AbstractCommand<{ a: number; b: number }, number> {}
 
 		class SumHandler extends AbstractHandler<SumCommand> {
-			handle(command) {
+			handle(command: SumCommand) {
 				return command.payload.a + command.payload.b;
 			}
 		}
 
-		commandHandlerMiddleware.setHandlerLocator(
-			new CommandToHandlerMapLocator([[SumCommand, new SumHandler()]])
+		const commandHandlerMiddleware = new CommandHandlerMiddleware(
+			new CommandToHandlerMapLocator([[SumCommand, new SumHandler()]]),
+			new HandleInflector()
 		);
 
 		const bus = new CommandBus([commandHandlerMiddleware]);

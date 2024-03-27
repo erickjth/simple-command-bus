@@ -1,13 +1,12 @@
-import { Command } from './types';
+import { Command, CommandPayload, CommandReturn } from './types';
 
 export const commandReturnSymbol = Symbol('command-return');
 
-export abstract class AbstractCommand<T, R = unknown> implements Command<T, R> {
-	[commandReturnSymbol]?: R;
-	constructor(public payload: T) {}
-}
+export abstract class AbstractCommand<P = never, R = void> implements Command<P, R> {
+	[commandReturnSymbol]: R;
+	payload: P;
 
-export abstract class AbstractCommandWithoutPayload<R = unknown> implements Command<undefined, R> {
-	[commandReturnSymbol]?: R;
-	constructor() {}
+	constructor(payload: P = void 0 as P) {
+		this.payload = payload;
+	}
 }

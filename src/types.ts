@@ -4,15 +4,14 @@ export type Probably<T> = T | undefined;
 export type Nullable<T> = T | null;
 
 export type NextFunction<C extends Command> = (command: C) => any;
-export type HandlerFunction<C extends Command> = (command: C) => any;
 
 export interface CommandBus {
 	handle(command: Command): any;
 }
 
 export interface Command<Payload = unknown, Return = unknown> {
-	[commandReturnSymbol]?: Return;
-	payload?: Payload;
+	[commandReturnSymbol]: Return;
+	payload: Payload;
 }
 
 export interface CommandWithPayload<Payload = unknown, Return = unknown>
@@ -27,21 +26,19 @@ export type CommandReturn<C> = C extends Command<any, infer Return> ? Return : n
 export type CommandType<TCommand> = Command<CommandReturn<TCommand>, CommandPayload<TCommand>>;
 
 export interface Handler<C> {
-	handle(command: C): CommandReturn<C>;
+	[key: string]: (command: C) => CommandReturn<C>;
 }
-
-export type CallableHandler<C extends Command> = Handler<C> | HandlerFunction<C>;
 
 export interface Middleware {
 	execute: <C extends Command>(command: C, next: NextFunction<C>) => unknown;
 }
 
 export interface MethodNameInflector {
-	inflect<C extends Command>(command: C, handler: CallableHandler<C>): string;
+	inflect<C extends Command>(command: C, handler: Handler<C>): string;
 }
 
 export interface HandlerLocator {
-	getHandlerForCommand<C extends Command>(command: C): CallableHandler<C>;
+	getHandlerForCommand<C extends Command>(command: C): Handler<C>;
 }
 
 export interface CommandNameExtractor {

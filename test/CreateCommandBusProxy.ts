@@ -1,34 +1,31 @@
 /* global it, describe */
 import { expect } from 'chai';
-const sinon = require('sinon');
-const mock = require('mock-require');
-import * as utils from '../src/utils';
-import CreateCommandBusProxy from '../src/CreateCommandBusProxy';
+import sinon from 'sinon';
+import module from 'module';
+import utils from '../src/utils';
 import { CommandToHandlerMapLocator } from '../src/handler/Locator/CommandToHandlerMapLocator';
 import { CommandBus } from '../src/CommandBus';
+import CreateCommandBusProxy from '../src/CreateCommandBusProxy';
 import { HandleInflector } from '../src/handler/MethodNameInflector/HandleInflector';
 import { CommandHandlerMiddleware } from '../src/handler/CommandHandlerMiddleware';
 import { AbstractHandler } from '../src/AbstractHandler';
-import { Command } from '../src/types';
+import { AbstractCommand } from '../src/AbstractCommand';
 
 describe('Testing CommandBus with proxy', function () {
 	it('Handling a command with handler', function () {
-		sinon.stub(utils, 'walkSync').callsFake(function walkSync() {
-			return ['FooCommand.js'];
-		});
+		class FooCommand extends AbstractCommand {}
 
-		sinon.stub(utils, 'isDirectory').callsFake(function isDirectory() {
-			return true;
-		});
-
-		class FooCommand implements Command {}
 		class FooHandler extends AbstractHandler<FooCommand> {
 			handle() {
 				return 1;
 			}
 		}
 
-		mock('FooCommand.js', FooCommand);
+		const sandbox = sinon.createSandbox();
+
+		sandbox.stub(utils, 'walkSync').callsFake(() => ['FooCommand.ts']);
+		sandbox.stub(utils, 'isDirectory').callsFake(() => true);
+		sandbox.stub(module, 'createRequire').callsFake(() => url => ({ FooCommand }));
 
 		const bus = new CommandBus([
 			new CommandHandlerMiddleware(
@@ -42,5 +39,7 @@ describe('Testing CommandBus with proxy', function () {
 		const result = busProxy.foo();
 
 		expect(result).to.be.equal(1);
+
+		sandbox.restore();
 	});
 });
