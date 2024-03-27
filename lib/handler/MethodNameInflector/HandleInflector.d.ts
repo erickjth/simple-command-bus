@@ -1,6 +1,6 @@
-import { MethodNameInflector, Command, CallableHandler } from '../../types';
+import { MethodNameInflector, Command, Handler } from '../../types';
 export declare class HandleInflector implements MethodNameInflector {
     protected methodName: string;
     constructor(methodName?: string);
-    inflect<C extends Command>(command: Command, handler: CallableHandler<C>): string;
+    inflect<C extends Command>(command: C, handler: Handler<C>): string;
 }
