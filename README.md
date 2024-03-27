@@ -77,4 +77,6 @@ const commandBus = new CommandBus([
 
 For more examples, check the `examples` folder.
 
-##
+# Credits
+
+This library is majorly inspired by [Tactician Command Bus](https://tactician.thephpleague.com/) for PHP
