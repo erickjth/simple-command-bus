@@ -1,12 +1,12 @@
 language: node_js
 node_js:
-  - "8"
+    - '14'
 
 cache:
-  yarn: true
-  directories:
-    - "node_modules"
+    yarn: true
+    directories:
+        - 'node_modules'
 
 script:
-- yarn test
-- yarn report:coverage
+    - yarn test
+    - yarn report:coverage

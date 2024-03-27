@@ -1,0 +1,17 @@
+{
+	"compilerOptions": {
+		"lib": ["ES2023"],
+		"module": "ES2022",
+		"target": "ES2022",
+		"moduleResolution": "Bundler",
+		"strictNullChecks": true,
+		"outDir": "./lib",
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"sourceMap": true,
+		"declaration": true,
+		"declarationDir": "./lib",
+		"strict": false
+	},
+	"include": ["src"]
+}
