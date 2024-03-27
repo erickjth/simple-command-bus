@@ -8,10 +8,8 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc -w",
-    "typecheck": "tsc --noEmit --composite false",
-    "test": "mocha  \"./test/**/*.ts\"",
-    "test:coverage": "nyc --reporter=html --reporter=text pnpm test",
-    "report:coverage": "nyc --reporter=text --reporter=text-lcov pnpm test > coverage.lcov && codecov"
+    "ts-check": "tsc --noEmit --composite false",
+    "test": "mocha  \"./test/**/*.ts\""
   },
   "repository": {
     "type": "git",
@@ -34,13 +32,11 @@
     "@types/mocha": "^8.2.0",
     "@types/node": "^20.11.30",
     "chai": "^4.4.1",
-    "codecov": "^3.0.1",
     "cross-env": "^7.0.3",
     "eslint-config-prettier": "^6.11.0",
     "husky": "^4.2.5",
     "lint-staged": "^10.2.11",
     "mocha": "^8.2.1",
-    "nyc": "^13.3.0",
     "prettier": "^2.2.1",
     "sinon": "^17.0.1",
     "tsx": "^4.7.1",
