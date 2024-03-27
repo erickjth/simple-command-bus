@@ -1,5 +1,5 @@
 {
-	"$schema": "https://json.schemastore.org/mocharc.json",
-	"require": "tsx",
-	"recursive": true
+  "$schema": "https://json.schemastore.org/mocharc.json",
+  "require": "tsx",
+  "recursive": true
 }

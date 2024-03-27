@@ -12,34 +12,34 @@ import { AbstractHandler } from '../src/AbstractHandler';
 import { AbstractCommand } from '../src/AbstractCommand';
 
 describe('Testing CommandBus with proxy', function () {
-	it('Handling a command with handler', function () {
-		class FooCommand extends AbstractCommand {}
+  it('Handling a command with handler', function () {
+    class FooCommand extends AbstractCommand {}
 
-		class FooHandler extends AbstractHandler<FooCommand> {
-			handle() {
-				return 1;
-			}
-		}
+    class FooHandler extends AbstractHandler<FooCommand> {
+      handle() {
+        return 1;
+      }
+    }
 
-		const sandbox = sinon.createSandbox();
+    const sandbox = sinon.createSandbox();
 
-		sandbox.stub(utils, 'walkSync').callsFake(() => ['FooCommand.ts']);
-		sandbox.stub(utils, 'isDirectory').callsFake(() => true);
-		sandbox.stub(module, 'createRequire').callsFake(() => url => ({ FooCommand }));
+    sandbox.stub(utils, 'walkSync').callsFake(() => ['FooCommand.ts']);
+    sandbox.stub(utils, 'isDirectory').callsFake(() => true);
+    sandbox.stub(module, 'createRequire').callsFake(() => _url => ({ FooCommand }));
 
-		const bus = new CommandBus([
-			new CommandHandlerMiddleware(
-				new CommandToHandlerMapLocator([[FooCommand, new FooHandler()]]),
-				new HandleInflector()
-			),
-		]);
+    const bus = new CommandBus([
+      new CommandHandlerMiddleware(
+        new CommandToHandlerMapLocator([[FooCommand, new FooHandler()]]),
+        new HandleInflector()
+      ),
+    ]);
 
-		const busProxy = CreateCommandBusProxy(bus, '/path/to/commands');
+    const busProxy = CreateCommandBusProxy(bus, '/path/to/commands');
 
-		const result = busProxy.foo();
+    const result = busProxy.foo();
 
-		expect(result).to.be.equal(1);
+    expect(result).to.be.equal(1);
 
-		sandbox.restore();
-	});
+    sandbox.restore();
+  });
 });

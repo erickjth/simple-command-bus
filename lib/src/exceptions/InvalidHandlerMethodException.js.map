@@ -1,1 +1,0 @@
-{"version":3,"file":"InvalidHandlerMethodException.js","sourceRoot":"","sources":["../../../src/exceptions/InvalidHandlerMethodException.ts"],"names":[],"mappings":";;;AAAA,MAAa,6BAA8B,SAAQ,KAAK;IACvD,YAAY,UAAkB,yBAAyB;QACtD,KAAK,CAAC,OAAO,CAAC,CAAC;IAChB,CAAC;IAED,MAAM,CAAC,SAAS,CAAC,MAAc;QAC9B,OAAO,IAAI,6BAA6B,CAAC,0BAA0B,MAAM,GAAG,CAAC,CAAC;IAC/E,CAAC;CACD;AARD,sEAQC"}

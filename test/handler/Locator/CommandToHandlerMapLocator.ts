@@ -5,23 +5,23 @@ import { AbstractCommand } from '../../../src/AbstractCommand';
 import { AbstractHandler } from '../../../src/AbstractHandler';
 
 describe('Testing CommandToHandlerMapLocator', () => {
-	it('Check handler class for command with class', () => {
-		class FooCommand extends AbstractCommand {}
+  it('Check handler class for command with class', () => {
+    class FooCommand extends AbstractCommand {}
 
-		class FooHandler extends AbstractHandler<FooCommand> {
-			handle(command: FooCommand) {}
-		}
+    class FooHandler extends AbstractHandler<FooCommand> {
+      handle(_command: FooCommand) {}
+    }
 
-		const locator = new CommandToHandlerMapLocator([[FooCommand, new FooHandler()]]);
-		const handler = locator.getHandlerForCommand(new FooCommand());
+    const locator = new CommandToHandlerMapLocator([[FooCommand, new FooHandler()]]);
+    const handler = locator.getHandlerForCommand(new FooCommand());
 
-		expect(handler instanceof FooHandler).to.be.true;
-	});
+    expect(handler instanceof FooHandler).to.be.true;
+  });
 
-	it('Missing locator for command', () => {
-		class FooCommand extends AbstractCommand {}
+  it('Missing locator for command', () => {
+    class FooCommand extends AbstractCommand {}
 
-		const locator = new CommandToHandlerMapLocator();
-		expect(() => locator.getHandlerForCommand(new FooCommand())).to.throw();
-	});
+    const locator = new CommandToHandlerMapLocator();
+    expect(() => locator.getHandlerForCommand(new FooCommand())).to.throw();
+  });
 });

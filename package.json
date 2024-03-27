@@ -9,7 +9,10 @@
     "build": "tsc",
     "build:watch": "tsc -w",
     "ts-check": "tsc --noEmit --composite false",
-    "test": "mocha  \"./test/**/*.ts\""
+    "test": "mocha  \"./test/**/*.ts\"",
+    "prettier": "prettier --write .",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix"
   },
   "repository": {
     "type": "git",
@@ -32,15 +35,13 @@
     "@types/mocha": "^8.2.0",
     "@types/node": "^20.11.30",
     "chai": "^4.4.1",
-    "cross-env": "^7.0.3",
-    "eslint-config-prettier": "^6.11.0",
-    "husky": "^4.2.5",
-    "lint-staged": "^10.2.11",
+    "eslint": "^8.57.0",
     "mocha": "^8.2.1",
-    "prettier": "^2.2.1",
+    "prettier": "^2.8.8",
     "sinon": "^17.0.1",
     "tsx": "^4.7.1",
-    "typescript": "^5.4.3"
+    "typescript": "^5.4.3",
+    "typescript-eslint": "^7.4.0"
   },
   "dependencies": {
     "is-callable": "^1.2.3"

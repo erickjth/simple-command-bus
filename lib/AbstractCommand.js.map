@@ -1,1 +1,0 @@
-{"version":3,"file":"AbstractCommand.js","sourceRoot":"","sources":["../src/AbstractCommand.ts"],"names":[],"mappings":"AAEA,MAAM,CAAC,MAAM,mBAAmB,GAAG,MAAM,CAAC,gBAAgB,CAAC,CAAC;AAE5D,MAAM,OAAgB,eAAe;IACpC,CAAC,mBAAmB,CAAC,CAAI;IACzB,OAAO,CAAI;IAEX,YAAY,UAAa,KAAK,CAAM;QACnC,IAAI,CAAC,OAAO,GAAG,OAAO,CAAC;IACxB,CAAC;CACD"}

@@ -3,17 +3,17 @@ import { MethodNameInflector, Command, Handler } from '../../types';
 import { isCallable } from '../../utils';
 
 export class HandleInflector implements MethodNameInflector {
-	protected methodName: string;
+  protected methodName: string;
 
-	constructor(methodName: string = 'handle') {
-		this.methodName = methodName;
-	}
+  constructor(methodName: string = 'handle') {
+    this.methodName = methodName;
+  }
 
-	inflect<C extends Command>(command: C, handler: Handler<C>) {
-		if (!isCallable(handler[this.methodName])) {
-			throw InvalidHandlerMethodException.forMethod(this.methodName);
-		}
+  inflect<C extends Command>(_command: C, handler: Handler<C>) {
+    if (!isCallable(handler[this.methodName])) {
+      throw InvalidHandlerMethodException.forMethod(this.methodName);
+    }
 
-		return this.methodName;
-	}
+    return this.methodName;
+  }
 }

@@ -1,8 +1,8 @@
 import {
-	CommandBus,
-	CommandHandlerMiddleware,
-	HandleInflector,
-	NamespaceHandlerLocator,
+  CommandBus,
+  CommandHandlerMiddleware,
+  HandleInflector,
+  NamespaceHandlerLocator,
 } from '../../src';
 import CreateCommandBusProxy from '../../src/CreateCommandBusProxy';
 import path from 'path';
@@ -13,18 +13,18 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const commandsPath = `${__dirname}/commands`;
 const handlersPath = `${__dirname}/handlers`;
 
-var commandHandlerMiddleware = new CommandHandlerMiddleware(
-	new NamespaceHandlerLocator(handlersPath),
-	new HandleInflector()
+const commandHandlerMiddleware = new CommandHandlerMiddleware(
+  new NamespaceHandlerLocator(handlersPath),
+  new HandleInflector(),
 );
 
-var simpleCommandBus = new CommandBus([commandHandlerMiddleware]);
+const simpleCommandBus = new CommandBus([commandHandlerMiddleware]);
 
 const commandBusProxy = CreateCommandBusProxy(simpleCommandBus, commandsPath);
 
 const result = commandBusProxy.foo({
-	bar: 'bar',
-	baz: 'baz',
+  bar: 'bar',
+  baz: 'baz',
 });
 
 console.log(result);

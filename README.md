@@ -33,14 +33,14 @@ type Return = { id: string; firstName: string; lastName: string };
 
 // The command class must extend AbstractCommand, and pass the payload type and the return type
 class CreateAccountCommand extends AbstractCommand<Payload, Return> {
-	// The constructor is handled by the AbstractCommand class
+  // The constructor is handled by the AbstractCommand class
 }
 
 // CreateAccount Handler
 class CreateAccountHandler extends AbstractHandler<CreateAccountCommand> {
-	handle(command: CreateAccountCommand) {
-		// Logic to create an account...
-	}
+  handle(command: CreateAccountCommand) {
+    // Logic to create an account...
+  }
 }
 ```
 

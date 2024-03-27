@@ -10,39 +10,39 @@ import { AbstractHandler } from '../../../src/AbstractHandler';
 const sandbox = sinon.createSandbox();
 
 describe('Testing NamespaceHandlerLocator', () => {
-	it('Check handler class for command', () => {
-		class FooCommand extends AbstractCommand {}
-		class FooHandler extends AbstractHandler<FooCommand> {
-			handle(command: FooCommand) {
-				return 1;
-			}
-		}
+  it('Check handler class for command', () => {
+    class FooCommand extends AbstractCommand {}
+    class FooHandler extends AbstractHandler<FooCommand> {
+      handle(_command: FooCommand) {
+        return 1;
+      }
+    }
 
-		sandbox.stub(utils, 'isDirectory').callsFake(() => true);
-		sandbox.stub(utils, 'walkSync').callsFake(() => ['FooHandler.ts']);
-		sandbox.stub(module, 'createRequire').callsFake(() => url => ({ FooHandler }));
+    sandbox.stub(utils, 'isDirectory').callsFake(() => true);
+    sandbox.stub(utils, 'walkSync').callsFake(() => ['FooHandler.ts']);
+    sandbox.stub(module, 'createRequire').callsFake(() => _url => ({ FooHandler }));
 
-		const locator = new NamespaceHandlerLocator('/path/to/handlers');
-		const handler = locator.getHandlerForCommand(new FooCommand());
+    const locator = new NamespaceHandlerLocator('/path/to/handlers');
+    const handler = locator.getHandlerForCommand(new FooCommand());
 
-		expect(handler instanceof FooHandler).to.be.true;
+    expect(handler instanceof FooHandler).to.be.true;
 
-		sandbox.restore();
-	});
+    sandbox.restore();
+  });
 
-	it('Missing locator for command', () => {
-		class FooCommand extends AbstractCommand {}
+  it('Missing locator for command', () => {
+    class FooCommand extends AbstractCommand {}
 
-		sandbox.stub(utils, 'isDirectory').callsFake(() => true);
-		sandbox.stub(utils, 'walkSync').callsFake(() => []);
-		sandbox.stub(module, 'createRequire').callsFake(() => url => ({}));
+    sandbox.stub(utils, 'isDirectory').callsFake(() => true);
+    sandbox.stub(utils, 'walkSync').callsFake(() => []);
+    sandbox.stub(module, 'createRequire').callsFake(() => _url => ({}));
 
-		const locator = new NamespaceHandlerLocator('/path/to/handlers');
+    const locator = new NamespaceHandlerLocator('/path/to/handlers');
 
-		expect(() => locator.getHandlerForCommand(new FooCommand())).to.throw(
-			/Missing handler for command "FooCommand"/
-		);
+    expect(() => locator.getHandlerForCommand(new FooCommand())).to.throw(
+      /Missing handler for command "FooCommand"/
+    );
 
-		sandbox.restore();
-	});
+    sandbox.restore();
+  });
 });

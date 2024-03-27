@@ -1,4 +1,2 @@
-lib/**/*.js
-examples/**/*.js
-node_modules/**/*.js
-test/**/*.js
+lib/
+node_modules/
