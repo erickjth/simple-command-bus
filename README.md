@@ -1,81 +1,80 @@
 # Simple Command Bus
 
-[![npm version](https://badge.fury.io/js/simple-command-bus.svg)](https://badge.fury.io/js/simple-command-bus)
-[![Build Status](https://travis-ci.org/erickjth/simple-command-bus.png?branch=master)](https://travis-ci.org/erickjth/simple-command-bus)
-[![codecov](https://codecov.io/gh/erickjth/simple-command-bus/branch/master/graph/badge.svg)](https://codecov.io/gh/erickjth/simple-command-bus)
+A Node.js library that implements the Command Bus pattern. It is a simple and easy-to-use library that allows you to create commands and handlers to separate the logic of your application. 100% written in TypeScript. It supports middlewares, logging, and more.
 
-Simple Command Bus Implementation for NodeJS.
-It is majorly inspired by Tactician Command Bus for PHP https://tactician.thephpleague.com/
+<hr />
 
-## Requirements
+[![npm](https://badge.fury.io/js/simple-command-bus.svg)](https://badge.fury.io/js/simple-command-bus)
+[![testing](https://github.com/erickjth/simple-command-bus/actions/workflows/ci.yml/badge.svg)](https://github.com/erickjth/simple-command-bus/actions)
 
-This project requires nodejs 14 or higher.
+# Requirements
 
-## Install
+This project requires nodejs 18 or higher.
 
-### NPM
+# Install
 
 `npm install simple-command-bus`
 
-### Yarn
+or
 
 `yarn add simple-command-bus`
 
-## Basic Usage
+# Basic Usage
 
-```
-const {
-	Command,
-	CommandBus,
-	CommandHandlerMiddleware,
-	ClassNameExtractor,
-	InMemoryLocator,
-	HandleInflector,
-	LoggerMiddleware 
-} = require('simple-command-bus');
+Create a command and handler
+
+```ts
+import { AbstractCommand, AbstractHandler } from 'simple-command-bus';
 
 // CreateAccount Command
-class CreateAccountCommand extends Command {
-	constructor(firstName, lastName) {
-		super();
-		this.firstName = firstName;
-		this.lastName = lastName;
-	}
+type Payload = { firstName: string; lastName: string };
+
+type Return = { id: string; firstName: string; lastName: string };
+
+// The command class must extend AbstractCommand, and pass the payload type and the return type
+class CreateAccountCommand extends AbstractCommand<Payload, Return> {
+	// The constructor is handled by the AbstractCommand class
 }
 
 // CreateAccount Handler
-class CreateAccountHandler {
-	handle(command) {
-		// Logic to create an account.
+class CreateAccountHandler extends AbstractHandler<CreateAccountCommand> {
+	handle(command: CreateAccountCommand) {
+		// Logic to create an account...
 	}
-};
-
-// Handler middleware
-var commandHandlerMiddleware = new CommandHandlerMiddleware(
-	new ClassNameExtractor(),
-	new InMemoryLocator({ CreateAccountHandler: new CreateAccountHandler() }),
-	new HandleInflector()
-);
-
-// Command bus instance
-var commandBus = new CommandBus([
-	new LoggerMiddleware(console),
-	commandHandlerMiddleware
-]);
-
-const createAccountCommand = new CreateAccountCommand('John', 'Doe');
-var result = commandBus.handle(createAccountCommand);
-console.log('Result:', result);
+}
 ```
 
-## Run tests
+Setup the command bus
 
-`yarn run test`
+```ts
+import {
+	CommandBus,
+	CommandHandlerMiddleware,
+	ClassNameExtractor,
+	CommandToHandlerMapLocator,
+	HandleInflector,
+	LoggerMiddleware,
+} from 'simple-command-bus';
 
-## Run tests with coverage
+const commandHandlerMiddleware = ;
 
-`yarn run test:coverage`
+const commandBus = new CommandBus([
+	new LoggerMiddleware(console),
+	new CommandHandlerMiddleware(
+		new CommandToHandlerMapLocator([
+			[CreateAccountCommand, new CreateAccountHandler()]
+		]),
+		new HandleInflector()
+	)
+]);
+```
 
-## Check example
+# Tests
 
--   `node examples/index.js`
+`pnpm run test`
+
+# Check examples
+
+For more examples, check the `examples` folder.
+
+##
