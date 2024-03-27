@@ -5,7 +5,6 @@ name: Build and Test
 
 on:
     - push
-    - pull_request
 
 jobs:
     build:
