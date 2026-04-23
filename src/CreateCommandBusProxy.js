@@ -1,4 +1,6 @@
-import { camelCase, upperFirst, isDirectory, isFunction, walkSync } from './utils';
+import {
+	camelCase, upperFirst, isDirectory, isFunction, walkSync
+} from './utils';
 
 const cachedCommands = {};
 

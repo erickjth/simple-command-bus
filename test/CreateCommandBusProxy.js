@@ -15,13 +15,13 @@ import InMemoryLocator from '../src/handler/Locator/InMemoryLocator';
 describe('Testing CommandBus with proxy', function() {
 	it('Handling a command with handler', function() {
 
-		sinon.stub(utils, 'walkSync').returns([ 'FooCommand.js' ])
+		sinon.stub(utils, 'walkSync').returns([ 'FooCommand' ])
 		sinon.stub(utils, 'isDirectory').returns(true);
 
 		class FooCommand extends Command {}
 		class FooHandler { handle() { return 1 } }
 
-		mock('FooCommand.js', FooCommand);
+		mock('FooCommand', FooCommand);
 
 		const bus = new CommandBus([
 			new CommandHandlerMiddleware(

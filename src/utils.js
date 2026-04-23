@@ -6,8 +6,8 @@ import upperFirstStr from 'lodash/upperFirst';
 
 const isDirectory = dir => fs.lstatSync(dir).isDirectory();
 
-const walkSync = file =>
-	(isDirectory(file) ? fs.readdirSync(file).map(f => walkSync(path.join(file, f))) : file);
+// eslint-disable-next-line max-len
+const walkSync = file => (isDirectory(file) ? fs.readdirSync(file).map(f => walkSync(path.join(file, f))) : file);
 
 const capitalize = s => capitalizeStr(s);
 

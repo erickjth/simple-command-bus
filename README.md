@@ -3,12 +3,11 @@
 [![Build Status](https://travis-ci.org/erickjth/simple-command-bus.png?branch=master)](https://travis-ci.org/erickjth/simple-command-bus)
 [![codecov](https://codecov.io/gh/erickjth/simple-command-bus/branch/master/graph/badge.svg)](https://codecov.io/gh/erickjth/simple-command-bus)
 
-
 Simple Command Bus Implementation for NodeJS.
 It is majorly inspired by Tactician Command Bus for PHP https://tactician.thephpleague.com/
 
 ## Requirements
-This project requires nodejs 8 or higher.
+This project requires nodejs 24 or higher.
 
 ## Install
 ### NPM

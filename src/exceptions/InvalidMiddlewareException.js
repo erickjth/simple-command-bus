@@ -1,4 +1,4 @@
-import { isObject } from 'lodash';
+import lod from 'lodash';
 import createException from './createException';
 
 const InvalidMiddlewareException = createException('InvalidMiddlewareException', {
@@ -8,7 +8,7 @@ const InvalidMiddlewareException = createException('InvalidMiddlewareException',
 InvalidMiddlewareException.forMiddleware = (middleware) => {
 	let message = null;
 
-	if (isObject(middleware)) {
+	if (lod.isObject(middleware)) {
 		message = `Middleware ${middleware.constructor.name} is invalid. It must extend from Middleware`;
 	}
 

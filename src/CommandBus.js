@@ -9,7 +9,7 @@ const stack = Symbol('stack');
 /**
  * Bus that run and handle commands through middlewares
  */
-export default class commandBus {
+export default class CommandBus {
 	constructor(middlewares = []) {
 		this[stack] = middlewares;
 	}

@@ -1,11 +1,20 @@
 {
   "name": "simple-command-bus",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "Simple Command Bus",
-  "main": "lib/index.js",
+  "main": "./lib/index.js",
+  "module": "./lib/index.mjs",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/index.mjs",
+      "require": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
   "scripts": {
-    "build": "babel src/ -d lib/",
-    "build:watch": "babel --watch src/ -d lib/",
+    "build": "tsup src/index.js --format cjs,esm --clean --out-dir lib && cp index.d.ts lib/index.d.ts",
+    "build:watch": "tsup src/index.js --format cjs,esm --clean --out-dir lib --watch",
     "typecheck": "flow check",
     "test": "mocha --recursive --require @babel/register",
     "test:coverage": "nyc --reporter=html --reporter=text mocha --recursive --require @babel/register",
@@ -33,16 +42,18 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.4.4",
     "@babel/preset-flow": "^7.0.0",
-    "chai": "^4.1.2",
-    "codecov": "^3.0.1",
+    "chai": "^6.2.2",
+    "codecov": "^3.8.3",
     "eslint-config-airbnb-standard": "^3.0.1",
-    "flow-bin": "^0.70.0",
-    "mocha": "^5.1.1",
+    "flow-bin": "^0.309.0",
+    "mocha": "^11.7.5",
     "mock-require": "^3.0.2",
-    "nyc": "^13.3.0",
-    "sinon": "^5.0.1"
+    "nyc": "^18.0.0",
+    "sinon": "^21.1.2",
+    "tsup": "^8.5.1"
   },
   "dependencies": {
-    "lodash": "^4.17.5"
+    "lodash": "^4.17.5",
+    "typescript": "^6.0.3"
   }
 }

@@ -1,4 +1,4 @@
-import { isFunction } from 'lodash';
+import lod from 'lodash';
 import CommandNameExtractor from './CommandNameExtractor/CommandNameExtractor';
 import MethodNameInflector from './MethodNameInflector/MethodNameInflector';
 import HandlerLocator from './Locator/HandlerLocator';
@@ -47,7 +47,8 @@ export default class CommandHandlerMiddleware extends Middleware {
 			methodName = this[_methodNameInflector].inflect(commandName, handler);
 		}
 
-		if (handler && isFunction(handler[methodName])) {
+		if (handler && lod.isFunction(handler[methodName])) {
+			// eslint-disable-next-line no-useless-call
 			result = handler[methodName].call(handler, command);
 		}
 

@@ -1,4 +1,4 @@
-import Middleware from '../Middleware';
+import Middleware from '../Middleware.js';
 
 export default class LoggerMiddleware extends Middleware {
 	constructor(logger) {

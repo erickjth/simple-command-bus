@@ -1,7 +1,7 @@
 /* global it, beforeEach, describe */
 import { expect } from 'chai';
-import CommandBus from '../src/CommandBus';
 import Command from '../src/Command';
+import CommandBus from '../src/CommandBus';
 import CommandHandlerMiddleware from '../src/handler/CommandHandlerMiddleware';
 import LoggerMiddleware from '../src/plugins/LoggerMiddleware';
 import ClassNameExtractor from '../src/handler/CommandNameExtractor/ClassNameExtractor';
